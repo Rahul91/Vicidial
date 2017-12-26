@@ -2851,10 +2851,14 @@ if ($function == 'add_lead')
 				if ($affected_rows > 0)
 					{
 					$lead_id = mysql_insert_id($link);
-
+                    
 					$result = 'SUCCESS';
 					$result_reason = "add_lead LEAD HAS BEEN ADDED";
-					echo "$result: $result_reason - $phone_number|$list_id|$lead_id|$gmt_offset|$user\n";
+                    
+                    $response = [ '$lead_id' => $lead_id, 'phone_number' => $phone_number ];
+                    header('Content-type: application/json');
+                    echo json_encode($response);
+// 					echo "$result: $result_reason - $phone_number|$list_id|$lead_id|$gmt_offset|$user\n";
 					$data = "$phone_number|$list_id|$lead_id|$gmt_offset";
 					api_log($link,$api_logging,$api_script,$user,$agent_user,$function,$value,$result,$result_reason,$source,$data);
 
